@@ -12,7 +12,7 @@ Change self.directory to the folder where typical downloads go to. end the direc
 
 class PRIZEPICKS_NFL_SCRAPER():
     def __init__(self):
-        self.directory = '\\projections.json'
+        self.directory = ''
         self.lines = []
         self.getJSON()
         self.load()
@@ -35,7 +35,7 @@ class PRIZEPICKS_NFL_SCRAPER():
         driver.quit()
 
     def load(self):
-        seive = {"passing", "receiving"}
+        seive = {"passing", "receiving", "attd"}
         with open(self.directory, 'r') as file:
             json_data = json.load(file)
         player_names = {elem["id"]: elem["attributes"]["name"]
@@ -46,15 +46,14 @@ class PRIZEPICKS_NFL_SCRAPER():
             if projection["type"] == "projection":
                 player_id = projection["relationships"]["new_player"]["data"]["id"]
                 player_name = player_names.get(player_id, "Unknown Player")
-
                 flash_sale = projection["attributes"].get("flash_sale_line_score")
                 line_score = projection["attributes"]["line_score"]
                 stat_type = self.statType(projection["attributes"]["stat_type"].lower()).lower()
-                
-                print(stat_type)
-                score = flash_sale if flash_sale is not None else line_score
-                if stat_type in seive:
-                    player_projections.append((player_name, stat_type, score))
+                if flash_sale is not None and stat_type in seive:
+                    player_projections.append((player_name, stat_type, flash_sale))
+                if line_score is not None and stat_type in seive:
+                    player_projections.append((player_name, stat_type, line_score))
+
         self.lines = player_projections
         
     def statType(self, stat):
@@ -62,5 +61,7 @@ class PRIZEPICKS_NFL_SCRAPER():
             return "receiving"
         elif stat == "pass yards":
             return "passing"
+        elif stat == "rush+rec tds":
+            return "attd"
         else:
             return stat

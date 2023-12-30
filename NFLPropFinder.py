@@ -19,6 +19,7 @@ class NFLPropFinder():
         self.categories = list(temp)
         self.passing_map = self.data_condenser(self.nfl_data.passing)
         self.receiving_map = self.data_condenser(self.nfl_data.receiving)
+        self.attd_map = self.data_condenser(self.nfl_data.attd)
 
     def data_condenser(self, data):
         ans = defaultdict(list)
@@ -33,6 +34,8 @@ class NFLPropFinder():
                 return self.sieve("passing", self.getPropsAverage(self.passing_map))
             case "receiving":
                 return self.sieve("receiving", self.getPropsAverage(self.receiving_map))
+            case "attd":
+                return self.sieve("attd", self.getPropsAverage(self.attd_map))
             case _:
                 print("invalid category")
     
@@ -48,9 +51,7 @@ class NFLPropFinder():
         hold = set()
         for name, type, line in self.prizepicks_data:
             if type == category:
-                hold.add((name, line-0.5))
                 hold.add((name, line))
-                hold.add((name, line+0.5))
         for name, type, line, odds in map:
             temp = (name, line)
             if temp in hold:

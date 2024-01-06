@@ -9,6 +9,8 @@ class ODDS_NHL_SCRAPER:
         self.ids = self.gameIDs()
         self.shots = []
         self.saves = []
+        self.points = []
+        self.blocks = []
         self.collect_all_odds()
 
 
@@ -16,6 +18,8 @@ class ODDS_NHL_SCRAPER:
         for id in self.ids:
             self.shots.extend(self.get_odds(id, "player_shots_on_goal"))
             self.saves.extend(self.get_odds(id, "player_total_saves"))
+            self.points.extend(self.get_odds(id, "player_points"))
+            self.blocks.extend(self.get_odds(id, "player_blocked_shots"))
 
 
     def gameIDs(self):

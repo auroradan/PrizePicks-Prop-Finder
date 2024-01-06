@@ -35,7 +35,7 @@ class PRIZEPICKS_NHL_SCRAPER():
         driver.quit()
 
     def load(self):
-        seive = {"shots", "saves"}
+        seive = {"shots", "saves", "points", "blocks"}
         with open(self.directory, 'r') as file:
             json_data = json.load(file)
         player_names = {elem["id"]: elem["attributes"]["name"]
@@ -61,5 +61,7 @@ class PRIZEPICKS_NHL_SCRAPER():
             return "shots"
         elif stat == "goalie saves":
             return "saves"
+        elif stat == "blocked shots":
+            return "blocks"
         else:
             return stat

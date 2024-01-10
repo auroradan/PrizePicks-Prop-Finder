@@ -7,6 +7,7 @@ PrizePicks is a Daily Fantasy Sports app that allows users to place sports bets 
 - NBA
 - NFL
 - NHL
+- NCAAB
 
 ### Supported Sportsbooks from The Odds API
 - FanDuel

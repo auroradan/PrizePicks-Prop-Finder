@@ -3,39 +3,28 @@ from KeySupplier import KeySupplier
 '''
 Go to https://the-odds-api.com/#get-access and create an account to get an api_key. replace self.api_key with the key given
 '''
-class ODDS_NBA_SCRAPER:
+class ODDS_MLB_SCRAPER:
     def __init__(self):
-        # key_supplier = KeySupplier()
-        # self.api_key = key_supplier.get_key()
-        self.api_key = ""
-        self.base_url = "https://api.the-odds-api.com/v4/sports/basketball_nba/events/"
+        key_supplier = KeySupplier()
+        self.api_key = key_supplier.get_key()
+        self.base_url = "https://api.the-odds-api.com/v4/sports/baseball_mlb/events/"
         self.ids = self.gameIDs()
-        self.points = []
-        self.rebounds = []
-        self.assists = []
-        self.threes = []
-        self.pra = []
-        self.pr = []
-        self.pa = []
-        self.ra = []
-        self.blocks = []
-        self.steals = []
+        self.pitcher_strikeouts = []
+        self.total_bases = []
+        self.hits_allowed = []
+        self.pitcher_outs = []
+        self.batter_hits_runs_rbis = []
         self.collect_all_odds()
 
 
     def collect_all_odds(self):
         for id in self.ids:
-            self.points.extend(self.get_odds(id, "player_points"))
-            self.rebounds.extend(self.get_odds(id, "player_rebounds"))
-            self.assists.extend(self.get_odds(id, "player_assists"))
-            self.threes.extend(self.get_odds(id, "player_threes"))
-            self.pra.extend(self.get_odds(id, "player_points_rebounds_assists"))
-            self.pr.extend(self.get_odds(id, "player_points_rebounds"))
-            self.pa.extend(self.get_odds(id, "player_points_assists"))
-            self.ra.extend(self.get_odds(id, "player_rebounds_assists"))
-            self.blocks.extend(self.get_odds(id, "player_blocks"))
-            self.steals.extend(self.get_odds(id, "player_steals"))
-            
+            self.pitcher_strikeouts.extend(self.get_odds(id, "pitcher_strikeouts"))
+            self.total_bases.extend(self.get_odds(id, "batter_total_bases"))
+            self.hits_allowed.extend(self.get_odds(id, "pitcher_hits_allowed"))
+            self.pitcher_outs.extend(self.get_odds(id, "pitcher_outs"))
+            self.batter_hits_runs_rbis.extend(self.get_odds(id, "batter_hits_runs_rbis"))
+
 
     def gameIDs(self):
         url = f"{self.base_url}?apiKey={self.api_key}&regions=us&markets=h2h&oddsFormat=american"

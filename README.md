@@ -9,6 +9,7 @@ PrizePicks is a Daily Fantasy Sports app that allows users to place sports bets 
 - NHL
 - NCAAB
 - MLB
+- WNBA
 
 ### Supported Sportsbooks from The Odds API
 - FanDuel
@@ -56,6 +57,15 @@ pip install requests
 ## Usage
 
 ### Running the code
+Locate the supplier file and add the information accordingly. Example of a Supplier.py file filled out accordingly below.
+```py
+def __init__(self):
+        # The key is the API key for the-odds-api at https://the-odds-api.com/#get-access
+        self.key = "12345678987654321abcdefgefdcba"
+        
+        # The directory is the location of the projections.json file
+        self.directory = "C:\\Users\\youraccountname\\Downloads\\projections.json"
+```
 Locate the PropFinder.py file and run
 
 Sample JSON of The Odds API

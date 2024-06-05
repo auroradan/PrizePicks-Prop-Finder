@@ -1,7 +1,7 @@
 # PrizePicks Prop Finder
 
 ## Overview
-PrizePicks is a Daily Fantasy Sports app that allows users to place sports bets on player props given a line where a player can go strictly over or under the line (ex: if a basketball player can get over or under 11 points in a game). PrizePicks Prop Finder uses Selenium to obtain player projection lines from the PrizePicks API and then utilizes The Odds API by making separate HTTP requests to access 20 different sportsbooks to retrieve player props with the highest odds on PrizePicks. The player prop with the highest probability of occurring can be chosen by averaging the highest odds across all sportsbooks.
+PrizePicks is a Daily Fantasy Sports app that allows users to place sports bets on player props given a line where a player can go strictly over or under the line (ex: if a basketball player can get over or under 11 points in a game). PrizePicks Prop Finder uses Selenium to obtain player projection lines from the PrizePicks API and then utilizes The Odds API by making separate HTTP requests to access 20 different sportsbooks to retrieve player props with the highest odds on PrizePicks. The player prop with the highest probability of occurring can be chosen by using a weighted average the highest odds across all sportsbooks. The weighted average is based on a sportsbook's market cap.
 
 ### Supported Sports for PrizePicks
 - NBA

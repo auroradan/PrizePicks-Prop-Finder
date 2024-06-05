@@ -62,7 +62,8 @@ class ODDS_WNBA_SCRAPER:
                                     outcome["description"],
                                     outcome["name"],
                                     outcome["point"],
-                                    outcome["price"]
+                                    outcome["price"],
+                                    bookmaker["title"]
                                 ))
                 return props
             else:

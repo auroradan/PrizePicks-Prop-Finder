@@ -1,11 +1,11 @@
-from NFLPropFinder.PRIZEPICKS_NFL_SCRAPER import PRIZEPICKS_NFL_SCRAPER
+from NonPropFinderSports.COD.PRIZEPICKS_COD_SCRAPER import PRIZEPICKS_COD_SCRAPER
 from collections import defaultdict
 import pandas as pd
 
-class NFL_PRIZEPICKS_EXCEL():
+class COD_PRIZEPICKS_EXCEL():
     
     def __init__(self):
-        self.prizepicks_data = PRIZEPICKS_NFL_SCRAPER().lines
+        self.prizepicks_data = PRIZEPICKS_COD_SCRAPER().lines
         self.categories = []
         self.data_dict = defaultdict(list)
         self.duplicates = defaultdict(set)
@@ -30,8 +30,8 @@ class NFL_PRIZEPICKS_EXCEL():
         
         df = pd.DataFrame(combined_data, columns=['Name', 'Line', 'Match Date', 'Stat Type'])
         
-        with pd.ExcelWriter('EXCEL_PRIZEPICKS_DATA/nfl_prizepicks_data.xlsx', engine='xlsxwriter') as writer:
+        with pd.ExcelWriter('EXCEL_PRIZEPICKS_DATA/cod_prizepicks_data.xlsx', engine='xlsxwriter') as writer:
             df.to_excel(writer, index=False, sheet_name='All_Data')
 
-        print("Excel file 'nfl_prizepicks_data.xlsx' created successfully.")
+        print("Excel file 'cod_prizepicks_data.xlsx' created successfully.")
     

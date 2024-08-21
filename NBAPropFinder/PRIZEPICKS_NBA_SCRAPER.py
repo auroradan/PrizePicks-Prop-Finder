@@ -8,6 +8,10 @@ import time
 from Supplier import Supplier
 from datetime import datetime, timezone, timedelta
 
+'''
+https://api.prizepicks.com/leagues
+'''
+
 class PRIZEPICKS_NBA_SCRAPER():
     def __init__(self):
         supplier = Supplier()

@@ -12,7 +12,7 @@ class PRIZEPICKS_NFL_SCRAPER():
         supplier = Supplier()
         self.directory = supplier.get_directory()
         self.lines = []
-        self.getJSON()
+        # self.getJSON()
         self.load()
 
     def getJSON(self):
@@ -33,7 +33,6 @@ class PRIZEPICKS_NFL_SCRAPER():
         driver.quit()
 
     def load(self):
-        seive = {"passing", "receiving", "attd", "rushing"}
         with open(self.directory, 'r') as file:
             json_data = json.load(file)
         player_names = {elem["id"]: elem["attributes"]["name"]
@@ -44,24 +43,8 @@ class PRIZEPICKS_NFL_SCRAPER():
             if projection["type"] == "projection":
                 player_id = projection["relationships"]["new_player"]["data"]["id"]
                 player_name = player_names.get(player_id, "Unknown Player")
-                flash_sale = projection["attributes"].get("flash_sale_line_score")
                 line_score = projection["attributes"]["line_score"]
-                stat_type = self.statType(projection["attributes"]["stat_type"].lower()).lower()
-                if stat_type in seive:
-                    player_projections.append((player_name, stat_type, line_score))
-                if stat_type in seive and flash_sale is not None:
-                    player_projections.append((player_name, stat_type, flash_sale))
+                stat_type = projection["attributes"]["stat_type"]
+                player_projections.append((player_name, stat_type, line_score))
 
         self.lines = player_projections
-        
-    def statType(self, stat):
-        if stat == "receiving yards":
-            return "receiving"
-        elif stat == "pass yards":
-            return "passing"
-        elif stat == "rush+rec tds":
-            return "attd"
-        elif stat == "rush yards":
-            return "rushing"
-        else:
-            return stat

@@ -3,7 +3,6 @@ from NFLPropFinder.ODDS_NFL_SCRAPER import ODDS_NFL_SCRAPER
 from NFLPropFinder.PRIZEPICKS_NFL_SCRAPER import PRIZEPICKS_NFL_SCRAPER
 from BookWeight import BookWeight
 
-
 class NFLPropFinder():
     
     def __init__(self):
@@ -34,16 +33,16 @@ class NFLPropFinder():
     
     def getCategory(self, category):
         match category.lower():
-            case "passing":
-                return self.sieve("passing", self.getPropsAverage(self.passing_map))
-            case "receiving":
-                return self.sieve("receiving", self.getPropsAverage(self.receiving_map))
-            case "attd":
-                return self.sieve("attd", self.getPropsAverage(self.attd_map))
-            case "rushing":
-                return self.sieve("rushing", self.getPropsAverage(self.rushing_map))
+            case "Pass Yards":
+                return self.sieve("Pass Yards", self.getPropsAverage(self.passing_map))
+            case "Receiving Yards":
+                return self.sieve("Receiving Yards", self.getPropsAverage(self.receiving_map))
+            case "Rush+Rec TDs":
+                return self.sieve("Rush+Rec TDs", self.getPropsAverage(self.attd_map))
+            case "Rush Yards":
+                return self.sieve("Rush Yards", self.getPropsAverage(self.rushing_map))
             case _:
-                print("invalid category")
+                pass
     
     def getPropsAverage(self, map):
         ans = []
@@ -71,11 +70,12 @@ class NFLPropFinder():
         hold = set()
         for name, type, line in self.prizepicks_data:
             if type == category:
-                hold.add((name, line))
+                hold.add((name, line-0.5, "whole"))
+                hold.add((name, line, "half"))
+                hold.add((name, line+0.5, "whole"))
         for name, type, line, odds in map:
-            temp = (name, line)
-            if temp in hold and odds > -140 and odds < 140:
-                ans.append((name, type, line, odds))
+            if (name, line, "half") in hold and odds > -140 and odds < 140:
+                ans.append((name, type, line, odds, "half"))
         return ans
         
     def getData(self):

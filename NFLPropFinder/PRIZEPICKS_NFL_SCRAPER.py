@@ -13,7 +13,7 @@ class PRIZEPICKS_NFL_SCRAPER():
         supplier = Supplier()
         self.directory = supplier.get_directory()
         self.lines = []
-        # self.getJSON()
+        self.getJSON()
         self.load()
 
     def getJSON(self):

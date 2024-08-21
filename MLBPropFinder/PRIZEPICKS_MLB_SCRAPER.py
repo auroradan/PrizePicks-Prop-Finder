@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 import pyautogui as p
 import time
 from Supplier import Supplier
+from datetime import datetime, timezone, timedelta
 
 class PRIZEPICKS_MLB_SCRAPER():
     def __init__(self):
@@ -33,7 +34,6 @@ class PRIZEPICKS_MLB_SCRAPER():
         driver.quit()
 
     def load(self):
-        seive = {"pitcher strikeouts", "total bases", "hits allowed", "hits+runs+rbis", "pitching outs"}
         with open(self.directory, 'r', encoding='utf-8') as file:
             json_data = json.load(file)
         player_names = {elem["id"]: elem["attributes"]["name"]
@@ -47,9 +47,14 @@ class PRIZEPICKS_MLB_SCRAPER():
                 flash_sale = projection["attributes"].get("flash_sale_line_score")
                 line_score = projection["attributes"]["line_score"]
                 stat_type = projection["attributes"]["stat_type"].lower()
-                if stat_type in seive:
-                    player_projections.append((player_name, stat_type, line_score))
-                if stat_type in seive and flash_sale is not None:
-                    player_projections.append((player_name, stat_type, flash_sale))
+                
+                start_time = projection["attributes"]["start_time"]
+                dt = datetime.fromisoformat(start_time)
+                central_time = dt.astimezone(timezone(timedelta(hours=-5)))
+                month = central_time.strftime("%b")
+                day = central_time.strftime("%d").lstrip('0')
+                formatted_date = central_time.strftime(f"{month}-{day}-%Y %I:%M %p")
+                
+                player_projections.append((player_name, stat_type, line_score, formatted_date))
 
         self.lines = player_projections

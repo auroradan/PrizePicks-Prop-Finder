@@ -22,8 +22,8 @@ class NCAABPropFinder():
         
     def condense(self):
         temp = set()
-        for name, type, line in self.prizepicks_data:
-            temp.add(type)
+        for x in self.prizepicks_data: # (name, type, line, date)
+            temp.add(x[1])
         self.categories = list(temp)
         self.points_map = self.data_condenser(self.nba_data.points)
         self.rebounds_map = self.data_condenser(self.nba_data.rebounds)
@@ -41,18 +41,18 @@ class NCAABPropFinder():
     
     def getCategory(self, category):
         match category.lower():
-            case "points":
-                return self.sieve("points", self.getPropsAverage(self.points_map))
-            case "rebounds":
-                return self.sieve("rebounds", self.getPropsAverage(self.rebounds_map))
-            case "assists":
-                return self.sieve("assists", self.getPropsAverage(self.assists_map))
-            case "threes":
-                return self.sieve("assists", self.getPropsAverage(self.threes_map))
-            case "pra":
-                return self.sieve("pra", self.getPropsAverage(self.pra_map))
+            case "Points":
+                return self.sieve("Points", self.getPropsAverage(self.points_map))
+            case "Rebounds":
+                return self.sieve("Rebounds", self.getPropsAverage(self.rebounds_map))
+            case "Assists":
+                return self.sieve("Assists", self.getPropsAverage(self.assists_map))
+            case "3-PT Made":
+                return self.sieve("3-PT Made", self.getPropsAverage(self.threes_map))
+            case "Pts+Rebs+Asts":
+                return self.sieve("Pts+Rebs+Asts", self.getPropsAverage(self.pra_map))
             case _:
-                print("invalid category")
+                pass
     
     def getPropsAverage(self, map):
         ans = []
@@ -78,7 +78,8 @@ class NCAABPropFinder():
     def sieve(self, category, map):
         ans = []
         hold = set()
-        for name, type, line in self.prizepicks_data:
+        for x in self.prizepicks_data: # (name, type, line, date)
+            name, type, line = x[0], x[1], x[2]
             if type == category:
                 hold.add((name, line-0.5))
                 hold.add((name, line))

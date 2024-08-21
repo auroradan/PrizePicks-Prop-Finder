@@ -16,8 +16,8 @@ class NFLPropFinder():
         
     def condense(self):
         temp = set()
-        for name, type, line in self.prizepicks_data:
-            temp.add(type)
+        for x in self.prizepicks_data: # (name, type, line, date)
+            temp.add(x[1])
         self.categories = list(temp)
         self.passing_map = self.data_condenser(self.nfl_data.passing)
         self.receiving_map = self.data_condenser(self.nfl_data.receiving)
@@ -68,7 +68,8 @@ class NFLPropFinder():
     def sieve(self, category, map):
         ans = []
         hold = set()
-        for name, type, line in self.prizepicks_data:
+        for x in self.prizepicks_data: # (name, type, line, date)
+            name, type, line = x[0], x[1], x[2]
             if type == category:
                 hold.add((name, line-0.5, "whole"))
                 hold.add((name, line, "half"))

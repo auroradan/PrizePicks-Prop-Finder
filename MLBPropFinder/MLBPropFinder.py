@@ -14,8 +14,8 @@ class MLBPropFinder():
         
     def condense(self):
         temp = set()
-        for name, type, line in self.prizepicks_data:
-            temp.add(type)
+        for x in self.prizepicks_data: # (name, type, line, date)
+            temp.add(x[1])
         self.categories = list(temp)
         self.pitcher_strikeouts_map = self.data_condenser(self.mlb_data.pitcher_strikeouts)
         self.total_bases_map = self.data_condenser(self.mlb_data.total_bases)
@@ -32,18 +32,18 @@ class MLBPropFinder():
     
     def getCategory(self, category):
         match category.lower():
-            case "pitcher strikeouts":
-                return self.sieve("pitcher strikeouts", self.getPropsAverage(self.pitcher_strikeouts_map))
-            case "total bases":
-                return self.sieve("total bases", self.getPropsAverage(self.total_bases_map))
-            case "hits allowed":
-                return self.sieve("hits allowed", self.getPropsAverage(self.hits_allowed_map))
-            case "pitching outs":
-                return self.sieve("pitching outs", self.getPropsAverage(self.pitcher_outs_map))
-            case "hits+runs+rbis":
-                return self.sieve("hits+runs+rbis", self.getPropsAverage(self.batter_hits_runs_rbis_map))
+            case "Pitcher Strikeouts":
+                return self.sieve("Pitcher Strikeouts", self.getPropsAverage(self.pitcher_strikeouts_map))
+            case "Total Bases":
+                return self.sieve("Total Bases", self.getPropsAverage(self.total_bases_map))
+            case "Hits Allowed":
+                return self.sieve("Hits Allowed", self.getPropsAverage(self.hits_allowed_map))
+            case "Pitching Outs":
+                return self.sieve("Pitching Outs", self.getPropsAverage(self.pitcher_outs_map))
+            case "Hits+Runs+RBIs":
+                return self.sieve("Hits+Runs+RBIs", self.getPropsAverage(self.batter_hits_runs_rbis_map))
             case _:
-                print("invalid category")
+                pass
     
     def getPropsAverage(self, map):
         ans = []
@@ -55,7 +55,8 @@ class MLBPropFinder():
     def sieve(self, category, map):
         ans = []
         hold = set()
-        for name, type, line in self.prizepicks_data:
+        for x in self.prizepicks_data: # (name, type, line, date)
+            name, type, line = x[0], x[1], x[2]
             if type == category:
                 hold.add((name, line-0.5))
                 hold.add((name, line))

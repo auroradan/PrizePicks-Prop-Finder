@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 import pyautogui as p
 import time
 from Supplier import Supplier
+from datetime import datetime, timezone, timedelta
 
 class PRIZEPICKS_WNBA_SCRAPER():
     def __init__(self):
@@ -33,7 +34,6 @@ class PRIZEPICKS_WNBA_SCRAPER():
         driver.quit()
 
     def load(self):
-        seive = {"points", "rebounds", "assists", "threes", "blocks", "steals", "pra", "pr", "pa", "ra"}
         with open(self.directory, 'r') as file:
             json_data = json.load(file)
         player_names = {elem["id"]: elem["attributes"]["name"]
@@ -47,26 +47,15 @@ class PRIZEPICKS_WNBA_SCRAPER():
 
                 flash_sale = projection["attributes"].get("flash_sale_line_score")
                 line_score = projection["attributes"]["line_score"]
-                stat_type = self.statType(projection["attributes"]["stat_type"]).lower()
-                if stat_type in seive:
-                    player_projections.append((player_name, stat_type, line_score))
-                if stat_type in seive and flash_sale is not None:
-                    player_projections.append((player_name, stat_type, flash_sale))
+                stat_type = projection["attributes"]["stat_type"]
+                
+                start_time = projection["attributes"]["start_time"]
+                dt = datetime.fromisoformat(start_time)
+                central_time = dt.astimezone(timezone(timedelta(hours=-5)))
+                month = central_time.strftime("%b")
+                day = central_time.strftime("%d").lstrip('0')
+                formatted_date = central_time.strftime(f"{month}-{day}-%Y %I:%M %p")
+                
+                player_projections.append((player_name, stat_type, line_score, formatted_date))
+
         self.lines = player_projections
-        
-    def statType(self, stat):
-        match stat:
-            case "Pts+Rebs+Asts":
-                return "pra"
-            case "Pts+Asts":
-                return "pa"
-            case "Pts+Rebs":
-                return "pr"
-            case "Rebs+Asts":
-                return "ra"
-            case "3-PT Made":
-                return "threes"
-            case "Blocked Shots":
-                return "blocks"
-            case _:
-                return stat

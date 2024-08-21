@@ -17,8 +17,8 @@ class NHLPropFinder():
         
     def condense(self):
         temp = set()
-        for name, type, line in self.prizepicks_data:
-            temp.add(type)
+        for x in self.prizepicks_data:
+            temp.add(x[1])
         self.categories = list(temp)
         self.saves_map = self.data_condenser(self.nhl_data.saves)
         self.shots_map = self.data_condenser(self.nhl_data.shots)
@@ -35,16 +35,16 @@ class NHLPropFinder():
     
     def getCategory(self, category):
         match category.lower():
-            case "saves":
-                return self.sieve("saves", self.getPropsAverage(self.saves_map))
-            case "shots":
-                return self.sieve("shots", self.getPropsAverage(self.shots_map))
-            case "blocks":
-                return self.sieve("blocks", self.getPropsAverage(self.blocks_map))
-            case "points":
-                return self.sieve("points", self.getPropsAverage(self.points_map))
-            case "assists":
-                return self.sieve("points", self.getPropsAverage(self.assists_map))
+            case "Goalie Saves":
+                return self.sieve("Goalie Saves", self.getPropsAverage(self.saves_map))
+            case "Shots On Goal":
+                return self.sieve("Shots On Goal", self.getPropsAverage(self.shots_map))
+            case "Blocked Shots":
+                return self.sieve("Blocked Shots", self.getPropsAverage(self.blocks_map))
+            case "Points":
+                return self.sieve("Points", self.getPropsAverage(self.points_map))
+            case "Assists":
+                return self.sieve("Assists", self.getPropsAverage(self.assists_map))
             case _:
                 print("invalid category")
     
@@ -72,7 +72,8 @@ class NHLPropFinder():
     def sieve(self, category, map):
         ans = []
         hold = set()
-        for name, type, line in self.prizepicks_data:
+        for x in self.prizepicks_data: # (name, type, line, date)
+            name, type, line = x[0], x[1], x[2]
             if type == category:
                 hold.add((name, line-0.5, "whole"))
                 hold.add((name, line, "half"))

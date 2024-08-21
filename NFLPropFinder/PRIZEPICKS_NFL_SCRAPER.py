@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 import pyautogui as p
 import time
 from Supplier import Supplier
+from datetime import datetime, timezone, timedelta
 
 class PRIZEPICKS_NFL_SCRAPER():
     def __init__(self):
@@ -45,6 +46,15 @@ class PRIZEPICKS_NFL_SCRAPER():
                 player_name = player_names.get(player_id, "Unknown Player")
                 line_score = projection["attributes"]["line_score"]
                 stat_type = projection["attributes"]["stat_type"]
-                player_projections.append((player_name, stat_type, line_score))
+                
+                start_time = projection["attributes"]["start_time"]
+                dt = datetime.fromisoformat(start_time)
+                central_time = dt.astimezone(timezone(timedelta(hours=-5)))
+                month = central_time.strftime("%b")
+                day = central_time.strftime("%d").lstrip('0')
+                formatted_date = central_time.strftime(f"{month}-{day}-%Y %I:%M %p")
+                
+                player_projections.append((player_name, stat_type, line_score, formatted_date))
 
         self.lines = player_projections
+        

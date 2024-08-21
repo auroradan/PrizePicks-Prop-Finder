@@ -1,0 +1,17 @@
+from NFLPropFinder.NFL_PRIZEPICKS_EXCEL_DUMP import NFL_PRIZEPICKS_CSV
+from NBAPropFinder.NBA_PRIZEPICKS_EXCEL_DUMP import NBA_PRIZEPICKS_CSV
+from NHLPropFinder.NHL_PRIZEPICKS_EXCEL_DUMP import NHL_PRIZEPICKS_CSV
+from NCAABPropFinder.NCAAB_PRIZEPICKS_EXCEL_DUMP import NCAAB_PRIZEPICKS_CSV
+from MLBPropFinder.MLB_PRIZEPICKS_EXCEL_DUMP import MLB_PRIZEPICKS_CSV
+from WNBAPropFinder.WNBA_PRIZEPICKS_EXCEL_DUMP import WNBA_PRIZEPICKS_CSV
+
+"""
+Reccomended to run one prop finder at a time by commenting all the other ones.
+"""
+
+nfl_csv = NFL_PRIZEPICKS_CSV()
+# nba_csv = NBA_PRIZEPICKS_CSV()
+# nhl_csv = NHL_PRIZEPICKS_CSV()
+# ncaab_csv = NCAAB_PRIZEPICKS_CSV()
+# mlb_csv = MLB_PRIZEPICKS_CSV()
+# wnba_csv = WNBA_PRIZEPICKS_CSV()

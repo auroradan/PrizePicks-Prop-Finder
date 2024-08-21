@@ -52,6 +52,8 @@ pip install time
 pip install collections
 pip install statistics
 pip install requests
+pip install pandas xlsxwriter
+pip install datetime
 ```
 
 ## Usage

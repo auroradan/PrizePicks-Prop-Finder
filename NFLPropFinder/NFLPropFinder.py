@@ -32,7 +32,7 @@ class NFLPropFinder():
         return ans
     
     def getCategory(self, category):
-        match category.lower():
+        match category:
             case "Pass Yards":
                 return self.sieve("Pass Yards", self.getPropsAverage(self.passing_map))
             case "Receiving Yards":

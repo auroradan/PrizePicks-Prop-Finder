@@ -34,7 +34,7 @@ class NHLPropFinder():
         return ans
     
     def getCategory(self, category):
-        match category.lower():
+        match category:
             case "Goalie Saves":
                 return self.sieve("Goalie Saves", self.getPropsAverage(self.saves_map))
             case "Shots On Goal":

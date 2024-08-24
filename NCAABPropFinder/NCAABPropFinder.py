@@ -40,7 +40,7 @@ class NCAABPropFinder():
         return ans
     
     def getCategory(self, category):
-        match category.lower():
+        match category:
             case "Points":
                 return self.sieve("Points", self.getPropsAverage(self.points_map))
             case "Rebounds":

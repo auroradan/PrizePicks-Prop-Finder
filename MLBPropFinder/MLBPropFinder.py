@@ -31,7 +31,7 @@ class MLBPropFinder():
         return ans
     
     def getCategory(self, category):
-        match category.lower():
+        match category:
             case "Pitcher Strikeouts":
                 return self.sieve("Pitcher Strikeouts", self.getPropsAverage(self.pitcher_strikeouts_map))
             case "Total Bases":

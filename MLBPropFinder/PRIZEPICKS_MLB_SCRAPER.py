@@ -46,7 +46,7 @@ class PRIZEPICKS_MLB_SCRAPER():
                 player_name = player_names.get(player_id, "Unknown Player")
                 flash_sale = projection["attributes"].get("flash_sale_line_score")
                 line_score = projection["attributes"]["line_score"]
-                stat_type = projection["attributes"]["stat_type"].lower()
+                stat_type = projection["attributes"]["stat_type"]
                 
                 start_time = projection["attributes"]["start_time"]
                 dt = datetime.fromisoformat(start_time)

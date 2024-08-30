@@ -81,5 +81,6 @@ class NFLPropFinder():
         
     def getData(self):
         for category in self.categories:
-            print("-------------------"+category+"-------------------")
-            print(self.getCategory(category))
+            if category in {"Pass Yards", "Receiving Yards", "Rush+Rec TDs", "Rush Yards"}:
+                print("-------------------"+category+"-------------------")
+                print(self.getCategory(category))

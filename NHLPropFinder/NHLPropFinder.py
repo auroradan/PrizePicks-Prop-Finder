@@ -85,5 +85,6 @@ class NHLPropFinder():
         
     def getData(self):
         for category in self.categories:
-            print("-------------------"+category+"-------------------")
-            print(self.getCategory(category))
+            if category in {"Goalie Saves", "Shots On Goal", "Blocked Shots", "Points", "Assists"}:
+                print("-------------------"+category+"-------------------")
+                print(self.getCategory(category))

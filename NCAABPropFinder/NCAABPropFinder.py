@@ -92,5 +92,6 @@ class NCAABPropFinder():
         
     def getData(self):
         for category in self.categories:
-            print("-------------------"+category+"-------------------")
-            print(self.getCategory(category))
+            if category in {"Points", "Rebounds", "Assists", "3-PT Made", "Pts+Rebs+Asts"}:
+                print("-------------------"+category+"-------------------")
+                print(self.getCategory(category))

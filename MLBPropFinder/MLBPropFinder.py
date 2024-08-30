@@ -63,11 +63,12 @@ class MLBPropFinder():
                 hold.add((name, line+0.5))
         for name, type, line, odds in map:
             temp = (name, line)
-            if temp in hold:
+            if temp in hold and odds > -140 and odds < 140:
                 ans.append((name, type, line, odds))
         return ans
         
     def getData(self):
         for category in self.categories:
-            print("-------------------"+category+"-------------------")
-            print(self.getCategory(category))
+            if category in {"Pitcher Strikeouts", "Total Bases", "Hits Allowed", "Pitching Outs", "Hits+Runs+RBIs"}:
+                print("-------------------"+category+"-------------------")
+                print(self.getCategory(category))

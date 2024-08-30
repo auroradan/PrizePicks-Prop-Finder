@@ -104,5 +104,6 @@ class NBAPropFinder():
         
     def getData(self):
         for category in self.categories:
-            print("-------------------"+category+"-------------------")
-            print(self.getCategory(category))
+            if category in {"Points", "Rebounds", "Assists", "3-PT Made", "Blocked Shots", "Steals", "Pts+Rebs+Asts", "Pts+Rebs", "Pts+Asts", "Rebs+Asts"}:
+                print("-------------------"+category+"-------------------")
+                print(self.getCategory(category))

@@ -88,7 +88,8 @@ class ODDS_NFL_SCRAPER:
                                     outcome["description"],
                                     "Over",
                                     0.5,
-                                    outcome["price"]
+                                    outcome["price"],
+                                    bookmaker["title"]
                                 ))
                 return props
             else:
